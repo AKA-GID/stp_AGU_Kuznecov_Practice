@@ -1,4 +1,4 @@
-#include "book.h"
+#include "Book.h"
 
 #include <stdexcept>
 #include <string>
@@ -70,4 +70,34 @@ bool Book::isValidData(std::string title, std::string author, int year, int page
         return false;
     }
     return true;
+}
+
+void swap_titles_by_value(Book b1, Book b2) {
+    std::string temporary_title = b1.title();
+    b1.updateTitle(b2.title());
+    b2.updateTitle(temporary_title);
+}
+
+void swap_titles_by_reference(Book& b1, Book& b2) {
+    std::string temporary_title = b1.title();
+    b1.updateTitle(b2.title());
+    b2.updateTitle(temporary_title);
+}
+
+bool is_older(const Book& b1, const Book& b2) {
+    return b1.year() < b2.year();
+}
+
+void swap_titles_by_pointer(Book* b1, Book* b2) {
+    if (b1 == nullptr || b2 == nullptr) {
+        return;
+    }
+
+    std::string temporary_title = b1->title();
+    b1->updateTitle(b2->title());
+    b2->updateTitle(temporary_title);
+}
+
+bool is_book_available(const Book* book) {
+    return book != nullptr && book->isAvailable();
 }

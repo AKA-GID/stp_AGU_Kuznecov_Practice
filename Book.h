@@ -34,4 +34,19 @@ private:
     bool is_available_ = true;
 };
 
+// Меняет названия только у локальных копий книг.
+void swap_titles_by_value(Book b1, Book b2);
+
+// Меняет названия у исходных объектов книг.
+void swap_titles_by_reference(Book& b1, Book& b2);
+
+// Возвращает true, если первая книга издана раньше второй.
+bool is_older(const Book& b1, const Book& b2);
+
+// Меняет названия у книг, на которые указывают b1 и b2.
+void swap_titles_by_pointer(Book* b1, Book* b2);
+
+// Возвращает true, если указатель не пустой и книга доступна.
+bool is_book_available(const Book* book);
+
 #endif
