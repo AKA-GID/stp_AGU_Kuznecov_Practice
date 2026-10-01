@@ -20,6 +20,10 @@ int Book::year() const { return year_; }
 int Book::pages() const { return pages_; }
 bool Book::isAvailable() const { return is_available_; }
 
+std::string Book::description() const {
+    return title_ + " by " + author_ + " (" + std::to_string(year_) + ")";
+}
+
 // Управление доступностью книги
 void Book::checkout() { is_available_ = false; }
 

@@ -13,6 +13,7 @@ public:
     int year() const;
     int pages() const;
     bool isAvailable() const;
+    std::string description() const;
 
     // Управление доступностью
     void checkout();

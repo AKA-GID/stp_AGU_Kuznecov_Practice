@@ -3,6 +3,7 @@
 
 #include "Book.h"
 #include "Book_utils.h"
+#include "rarebook.h"
 
 int main() {
     Book book("Война и мир", "Л. Толстой", 1869, 1225);
@@ -92,6 +93,40 @@ int main() {
         Book bad("", "Автор", 2000, 100);
     } catch (const std::invalid_argument& e) {
         std::cout << "Ошибка создания: " << e.what() << "\n";
+    }
+
+    // Практическая 4: наследование RareBook от Book.
+    Book regular_book("Анна Каренина", "Л. Толстой", 1878, 864);
+    RareBook rare_book("Первое издание", "А. Пушкин", 1833, 240, 15000.0);
+
+    std::cout << "\nОписание обычной книги: " << regular_book.description() << "\n";
+    std::cout << "Описание редкой книги: " << rare_book.description() << "\n";
+    std::cout << "Поля редкой книги: " << rare_book.title() << " | "
+              << rare_book.author() << " | " << rare_book.year() << " | "
+              << rare_book.pages() << "\n";
+
+    rare_book.checkout();
+    std::cout << "Редкая книга доступна после выдачи? "
+              << (rare_book.isAvailable() ? "да" : "нет") << "\n";
+    rare_book.returnBook();
+    std::cout << "Редкая книга доступна после возврата? "
+              << (rare_book.isAvailable() ? "да" : "нет") << "\n";
+
+    std::cout << "Оценочная стоимость: $" << rare_book.estimatedValue() << "\n";
+    rare_book.applyDiscount(10.0);
+    std::cout << "После скидки 10%: $" << rare_book.estimatedValue() << "\n";
+    std::cout << "Новое описание: " << rare_book.description() << "\n";
+
+    try {
+        rare_book.applyDiscount(150.0);
+    } catch (const std::invalid_argument& e) {
+        std::cout << "Ошибка скидки: " << e.what() << "\n";
+    }
+
+    try {
+        RareBook invalid_rare_book("Некорректная оценка", "Автор", 2000, 100, -1.0);
+    } catch (const std::invalid_argument& e) {
+        std::cout << "Ошибка создания редкой книги: " << e.what() << "\n";
     }
 
     return 0;
