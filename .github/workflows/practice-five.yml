@@ -8,20 +8,19 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-run:
+  build-test-and-demo:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Build example
-        run: g++ -std=c++17 -Wall -Wextra -pedantic Book.cpp ebook.cpp main.cpp -o ebook_demo
-
-      - name: Run example and check output
+      - uses: actions/checkout@v4
+      - name: Build demonstration
+        run: g++ -std=c++17 -Wall -Wextra -pedantic Book.cpp ebook.cpp main.cpp -o practice_demo
+      - name: Show demonstration output
+        run: ./practice_demo
+      - name: Build tests
+        run: g++ -std=c++17 -Wall -Wextra -pedantic Book.cpp ebook.cpp tests.cpp -o practice_tests
+      - name: Run tests and show results
         shell: bash
         run: |
-          ./ebook_demo | tee practice-five-output.txt
-          grep -Fq "Book: 1984 by George Orwell (1949)" practice-five-output.txt
-          grep -Fq "Ebook through Book reference: 1984 by George Orwell (1949) [URL: http://example.com/1984]" practice-five-output.txt
-          grep -Fq "Invalid title rejected:" practice-five-output.txt
+          set -o pipefail
+          ./practice_tests | tee test-output.txt
+          grep -Fq "All tests passed." test-output.txt
