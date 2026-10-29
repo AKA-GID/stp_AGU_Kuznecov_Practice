@@ -13,14 +13,14 @@ public:
     int year() const;
     int pages() const;
     bool isAvailable() const;
-    std::string description() const;
+    virtual std::string description() const;
 
     // Управление доступностью
     void checkout();
     void returnBook();
 
     // Сеттеры с валидацией
-    void updateTitle(std::string new_title);
+    virtual void updateTitle(std::string new_title);
     void updateAuthor(std::string new_author);
     void updateYear(int new_year);
     void updatePages(int new_pages);
