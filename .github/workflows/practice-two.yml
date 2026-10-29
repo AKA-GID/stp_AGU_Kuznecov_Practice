@@ -1,0 +1,26 @@
+name: Practice two
+
+on:
+  push:
+    branches: [Practice_two]
+  pull_request:
+    branches: [Practice_two]
+  workflow_dispatch:
+
+jobs:
+  build-test-and-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build demonstration
+        run: g++ -std=c++17 -Wall -Wextra -pedantic Book.cpp Book_utils.cpp main.cpp -o practice_demo
+      - name: Show demonstration output
+        run: ./practice_demo
+      - name: Build tests
+        run: g++ -std=c++17 -Wall -Wextra -pedantic Book.cpp Book_utils.cpp tests.cpp -o practice_tests
+      - name: Run tests and show results
+        shell: bash
+        run: |
+          set -o pipefail
+          ./practice_tests | tee test-output.txt
+          grep -Fq "All tests passed." test-output.txt
