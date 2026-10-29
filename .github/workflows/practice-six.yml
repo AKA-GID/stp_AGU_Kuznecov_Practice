@@ -1,0 +1,26 @@
+name: Practice six
+
+on:
+  push:
+    branches: [Practice_six]
+  pull_request:
+    branches: [Practice_six]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build and run checks
+        run: g++ -std=c++17 -Wall -Wextra -pedantic vector2d.cpp main.cpp -o vector2d_tests
+
+      - name: Show test results
+        shell: bash
+        run: |
+          set -o pipefail
+          ./vector2d_tests | tee vector2d-test-output.txt
+          grep -Fq "All checks passed." vector2d-test-output.txt
