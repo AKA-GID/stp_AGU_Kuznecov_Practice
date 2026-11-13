@@ -1,0 +1,26 @@
+name: Practice eight
+
+on:
+  push:
+    branches: [Practice_eight]
+  pull_request:
+    branches: [Practice_eight]
+  workflow_dispatch:
+
+jobs:
+  build-test-and-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build demonstration
+        run: g++ -std=c++17 -Wall -Wextra -pedantic Book.cpp library.cpp main.cpp -o practice_demo
+      - name: Show demonstration output
+        run: ./practice_demo
+      - name: Build tests
+        run: g++ -std=c++17 -Wall -Wextra -pedantic Book.cpp library.cpp tests.cpp -o practice_tests
+      - name: Run tests and show results
+        shell: bash
+        run: |
+          set -o pipefail
+          ./practice_tests | tee test-output.txt
+          grep -Fq "All tests passed." test-output.txt
